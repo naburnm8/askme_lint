@@ -1,0 +1,46 @@
+{%extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex gap-3 align-items-center">
+    <h1>Settings: Dr.Pepper</h1>
+</div>
+
+<form>
+    <div class="row mb-3">
+        <label for="inputLogin" class="col-sm-2 col-form-label">Login</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="inputLogin" placeholder="dr_pepper" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="inputEmail" placeholder="dr.pepper@mail.ru" required maxlength="30">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputNickName" class="col-sm-2 col-form-label">NickName</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="inputNickName" placeholder="dr_pepper" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="formFile" class="col-sm-2 col-form-label">Upload avatar</label>
+        <div class="col-sm-4">
+            <img src="{% static 'img/profile.jpg' %}" alt="Avatar" class="img-thumbnail mb-3" style="width: 150px; height: 150px;">
+            <input class="form-control" type="file" id="formFile">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-11 offset-sm-2">
+            <button class="btn btn-outline-success" type="submit">Save</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+

@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="card w-100" style="width: 18rem;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="border mb-2" style="height: 100px; text-align: center" >
+                        <img src="{% static '/img/amogus.jpg' %}" alt="Avatar" class="img-fluid" width="50" height="50">
+                    </div>
+                    <input class="form-control" type="number" value="{{question.likes}}" placeholder="Default input"
+                        aria-label="default input example">
+
+                </div>
+                <div class="col-9">
+
+                    <h5 class="card-title"><a href="{% url 'question' question_id=question.id %}">{{ question.title }}</a></h5>
+                    <p class="card-text">{{ question.content }}</p>
+
+                    <div class="d-flex gap-5">
+                        <a href="{% url 'question' question_id=question.id %}" class="card-link">Answer ({{ question.amount_of_answers }})</a>
+                        <div>
+
+                            Tags:
+                            {% for tag in question.tags.all%}
+                            {% include 'components/question_tags.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

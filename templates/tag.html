@@ -1,0 +1,23 @@
+{%extends 'layouts/base.html' %}
+
+
+{% block content %}
+
+<div class="d-flex gap-3 align-items-center">
+    <h1>Tag: {{tag_name}}</h1>
+</div>
+
+{% for question in questions %}
+
+{% include 'components/question_item.html' %}
+
+{% endfor %}
+
+{% include 'components/pagination.html' %}
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,4 @@
+{% load static %}
+<span class="badge text-bg-primary">
+    <a href="{% url 'tag' tag_name=tag.name %}" class="text-decoration-none text-white">{{ tag.name }}</a>
+</span>

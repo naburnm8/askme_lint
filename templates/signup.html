@@ -1,0 +1,55 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+
+<div class="d-flex gap-3 align-items-center">
+    <h1>Registration</h1>
+</div>
+
+<p style="color: red">Sorry, this email address already registered</p>
+<form>
+    <div class="row mb-3">
+        <label for="inputLogin" class="col-sm-2 col-form-label">Login</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="inputLogin" placeholder="dr_pepper" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="inputEmail" placeholder="dr.pepper@mail.ru" required maxlength="30">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputNickName" class="col-sm-2 col-form-label">NickName</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="inputNickName" placeholder="dr_pepper" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control" id="inputPassword" placeholder="********" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputRepeatPassword" class="col-sm-2 col-form-label">Repeat password</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control" id="inputRepeatPassword" placeholder="********" required maxlength="20">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="formFile" class="col-sm-2 col-form-label">Upload avatar</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="file" id="formFile">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-11 offset-sm-2">
+            <button class="btn btn-outline-success" type="submit">Register</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -86,7 +86,7 @@ class QuestionLike(models.Model):
         unique_together = ('question', 'author')
 
     def __str__(self):
-        return self.author
+        return self.author.user.username
 
 
 class AnswerLike(models.Model):
@@ -98,7 +98,7 @@ class AnswerLike(models.Model):
         unique_together = ('answer', 'author')
 
     def __str__(self):
-        return self.author
+        return self.author.user.username
 
 
 def paginate(object_list, request, per_page=3):

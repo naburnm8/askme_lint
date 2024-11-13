@@ -17,7 +17,7 @@ def paginate(object_list, request, per_page=3):
 
 
 def index(request):
-    questions = models.paginate(models.Question.objects.get_new_questions(), request)
+    questions = paginate(models.Question.objects.get_new_questions(), request)
     return render(request, 'index.html',
                   context={'questions': questions, 'page_obj': questions,
                            'tags': models.Tag.objects.get_popular_tags(),
@@ -25,7 +25,7 @@ def index(request):
 
 
 def question(request, question_id):
-    answers = models.paginate(models.Answer.objects.get_answers(question_id), request)
+    answers = paginate(models.Answer.objects.get_answers(question_id), request)
     try:
         question_item = models.Question.objects.get(id=question_id)
     except models.Question.DoesNotExist:
@@ -61,7 +61,7 @@ def tag(request, tag_name):
         models.Tag.objects.get(name=tag_name)
     except models.Tag.DoesNotExist:
         raise Http404('Tag does not exist')
-    questions = models.paginate(models.Question.objects.get_questions_by_tag(tag_name), request)
+    questions = paginate(models.Question.objects.get_questions_by_tag(tag_name), request)
     return render(request, 'tag.html',
                   context={'tag_name': tag_name, 'questions': questions, 'page_obj': questions,
                            'tags': models.Tag.objects.get_popular_tags(),
@@ -69,8 +69,9 @@ def tag(request, tag_name):
 
 
 def hot(request):
-    questions = models.paginate(models.Question.objects.get_hot_questions(), request)
+    questions = paginate(models.Question.objects.get_hot_questions(), request)
     return render(request, 'index.html',
                   context={'questions': questions, 'page_obj': questions,
                            'tags': models.Tag.objects.get_popular_tags(),
                            'members': models.Profile.objects.get_popular_profiles()})
+

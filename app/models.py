@@ -101,14 +101,3 @@ class AnswerLike(models.Model):
         return self.author.user.username
 
 
-def paginate(object_list, request, per_page=3):
-    paginator = Paginator(object_list, per_page)
-    page = request.GET.get('page', 1)
-    try:
-        paginator.page(page)
-    except PageNotAnInteger:
-        raise Http404("Page not found")
-    except EmptyPage:
-        raise Http404("Page not found")
-    else:
-        return paginator.page(page)

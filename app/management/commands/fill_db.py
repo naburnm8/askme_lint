@@ -25,19 +25,15 @@ class Command(BaseCommand):
 
         usernames = [f'{fake.user_name()}_{i}' for i in range(profiles_size)]
         emails = [f'{username}@mail.ru' for username in usernames]
-
         users = [User(username=username, email=email, password=fake.password()) for username, email in
                  zip(usernames, emails)]
         User.objects.bulk_create(users)
-
         users = User.objects.all()[:profiles_size]
         profiles = [Profile(user=user) for user in users]
-
-
         Profile.objects.bulk_create(profiles)
         print(f'Done profiles at: {datetime.now()}')
-        profiles = Profile.objects
 
+        profiles = Profile.objects
         tags = [Tag(name=f'{fake.word()}{i}') for i in range(tags_size)]
         Tag.objects.bulk_create(tags)
         tags = Tag.objects
@@ -45,7 +41,6 @@ class Command(BaseCommand):
 
         profile_ids = list(profiles.values_list('pk', flat=True))
         tag_ids = list(tags.values_list('pk', flat=True))
-
         questions_lst = [
             Question(
                 title=fake.sentence(nb_words=3),
@@ -57,15 +52,13 @@ class Command(BaseCommand):
             )
             for i in range(questions_size)
         ]
-
         Question.objects.bulk_create(questions_lst)
-
         for question in questions_lst:
             selected_tag_ids = random.sample(tag_ids, random.randint(1, 5))
             question.tags.add(*selected_tag_ids)
-
         questions = Question.objects
         print(f'Done questions at: {datetime.now()}')
+
         answers_lst = []
         question_ids = list(questions.values_list('pk', flat=True))
         profile_ids = list(profiles.values_list('pk', flat=True))
@@ -87,20 +80,13 @@ class Command(BaseCommand):
         Answer.objects.bulk_create(answers_lst)
         answers = Answer.objects
         print(f'Done answers at: {datetime.now()}')
-        # Pre-fetch profile and question IDs
         question_ids = list(questions.values_list('pk', flat=True))
         profile_ids = list(profiles.values_list('pk', flat=True))
-
-        # Generate unique pairs of (question_id, author_id)
         unique_pairs = set()
         while len(unique_pairs) < likes_size // 2:
             pair = (random.choice(question_ids), random.choice(profile_ids))
             unique_pairs.add(pair)
-
-        # Initialize likes count dictionary for bulk update
         likes_count = {q_id: 0 for q_id in question_ids}
-
-        # Create QuestionLike instances and update likes count
         question_likes = []
         for question_id, author_id in unique_pairs:
             like = random.randint(0, 1)
@@ -110,31 +96,20 @@ class Command(BaseCommand):
                 like=like
             )
             if like == 1:
-                likes_count[question_id] += 1  # Update like count for each question
+                likes_count[question_id] += 1
             question_likes.append(question_like)
-
-        # Update `likes` in questions_lst based on `likes_count`
         for question in questions_lst:
             question.likes += likes_count.get(question.pk, 0)
-
-        # Bulk update questions and create question likes
         Question.objects.bulk_update(questions_lst, ['likes'])
         QuestionLike.objects.bulk_create(question_likes)
         print(f'Done Q_Likes at: {datetime.now()}')
-
         answer_ids = list(answers.values_list('pk', flat=True))
         profile_ids = list(profiles.values_list('pk', flat=True))
-
-        # Generate unique pairs of (answer_id, author_id)
         unique_pairs = set()
         while len(unique_pairs) < likes_size // 2:
             pair = (random.choice(answer_ids), random.choice(profile_ids))
             unique_pairs.add(pair)
-
-        # Initialize likes count dictionary for bulk update
         likes_count = {a_id: 0 for a_id in answer_ids}
-
-        # Create AnswerLike instances and update likes count
         answer_likes = []
         for answer_id, author_id in unique_pairs:
             like = random.randint(0, 1)
@@ -144,14 +119,10 @@ class Command(BaseCommand):
                 like=like
             )
             if like == 1:
-                likes_count[answer_id] += 1  # Update like count for each answer
+                likes_count[answer_id] += 1
             answer_likes.append(ans_like)
-
-        # Update `likes` in answers_lst based on `likes_count`
         for answer in answers_lst:
             answer.likes += likes_count.get(answer.pk, 0)
-
-        # Bulk update answers and create answer likes
         Answer.objects.bulk_update(answers_lst, ['likes'])
         AnswerLike.objects.bulk_create(answer_likes)
         print(f'Done A_Likes at: {datetime.now()}')
